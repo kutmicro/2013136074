@@ -2,3 +2,4 @@
 ³¯¾¾ http://kocoafab.cc/make/view/668
 
 http://community.blynk.cc/t/esp-13-web-server-serial-wifi-shield/7125
+https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/examples/HTTPSRequest/HTTPSRequest.ino
