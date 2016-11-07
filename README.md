@@ -30,7 +30,7 @@
 | D25 | Din | NEOPIXEL3 제어 |
 | D26 | Din | NEOPIXEL4 제어 |
 ### 5. 구성도   
-
+![구성도](https://github.com/kutmicro/2013136074/blob/master/res_md/%EA%B5%AC%EC%84%B1%EB%8F%84.png)
 ### 6. 재료
 #### 6.1 부품
 - Arduino Mega 1개
