@@ -8,7 +8,7 @@
 #### 1.2 정의
 기상청에서 실시간으로 날씨 정보를 받아와 날씨를 시각적으로 보여주는 아크릴 램프. 
 
-![정의](https://github.com/kutmicro/2013136074/blob/master/res_md/lamp_func.png)
+![정의](https://github.com/kutmicro/2013136074/blob/master/res_md/lamp_func.png "정의"){.alignleft}
 
 ### 2. 기능
 #### 2.1 날씨
@@ -22,9 +22,9 @@
 #### 3.2 외관
 아크릴판을 각각 해, 구름, 비, 눈, 해+구름 모양으로 레이저 커팅기를 이용해 만든다. 하단에는 3D프린터를 이용해 아크릴판을 세우고 LED와 아두이노를 보호하는 케이스를 만든다.
 
-![외관](https://github.com/kutmicro/2013136074/blob/master/res_md/lamp_smaple1.png)
+![외관](https://github.com/kutmicro/2013136074/blob/master/res_md/lamp_smaple1.png "외관"){.alignleft}
 
-![샘플_그냥예뻐서](https://github.com/kutmicro/2013136074/blob/master/res_md/lamp_smaple2.png)
+![샘플_그냥예뻐서](https://github.com/kutmicro/2013136074/blob/master/res_md/lamp_smaple2.png "샘플_그냥예뻐서"){.alignleft}
 
 ### 4. 핀맵
 | Arduino Pin | NEOPIXEL | Description |
@@ -36,7 +36,7 @@
 | D25 | Din | NEOPIXEL3 제어 |
 | D26 | Din | NEOPIXEL4 제어 |
 ### 5. 구성도   
-![구성도](https://github.com/kutmicro/2013136074/blob/master/res_md/%EA%B5%AC%EC%84%B1%EB%8F%84.png)
+![구성도](https://github.com/kutmicro/2013136074/blob/master/res_md/%EA%B5%AC%EC%84%B1%EB%8F%84.png "구성도"){.alignleft}
 ### 6. 재료
 #### 6.1 부품
 - Arduino Mega 1개
