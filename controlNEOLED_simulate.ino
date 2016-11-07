@@ -17,6 +17,10 @@
 //첫번째 인자값은 네오픽셀의 LED의 개수
 //두번째 인자값은 네오픽셀이 연결된 아두이노의 핀번호
 //세번째 인자값은 네오픽셀의 타입에 따라 바뀌는 flag
+//   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
+//   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
+//   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
+//   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(5, PIN, NEO_GRB + NEO_KHZ800);
 
 int sample_cloud = 1;		// 1(맑음)	 : 2번핀 켬
