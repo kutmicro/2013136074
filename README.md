@@ -21,10 +21,15 @@
 #### 3.2 외관
 아크릴판을 각각 해, 구름, 비, 눈, 해+구름 모양으로 레이저 커팅기를 이용해 만든다. 하단에는 3D프린터를 이용해 아크릴판을 세우고 LED와 아두이노를 보호하는 케이스를 만든다.
 ### 4. 핀맵
-| 왼쪽 정렬 | 가운데 정렬 | 오른쪽 정렬 |
-| :--- | :---: | ---: |
-| 내용 11 | 내용 12 | 내용 13 |
-| 내용 21 | 내용 22 | 내용 23 |
+| 아두이노 |
+| Arduino Pin | NEOPIXEL | Description |
+| :---: | :---: | :---: |
+| GND | GND | NEOPIXEL의 GND에 연결 |
+| +5V | +5V | NEOPIXEL에 전원 공급 |
+| D23 | Din | NEOPIXEL1 제어 |
+| D24 | Din | NEOPIXEL2 제어 |
+| D25 | Din | NEOPIXEL3 제어 |
+| D26 | Din | NEOPIXEL4 제어 |
 ### 5. 구성도   
 
 ### 6. 재료
@@ -39,3 +44,13 @@
 #### 6.2 장비
 - 3D 프린터
 - 레이저커팅기
+
+### 7. 참고 사이트
+- Arduino Pitout Diagram "http://samyeon.tistory.com/64"
+- Neopixel LED "http://kocoafab.cc/tutorial/view/228"
+- Weather Parsing "http://kocoafab.cc/tutorial/view/595"
+- DIY Acrylic Lamp "http://kocoafab.cc/make/view/649"
+- Weather Lamp "http://kocoafab.cc/make/view/668"
+- ESP-13 Sheild Document "https://fineshang.gitbooks.io/esp8266-based-serial-wifi-shield-for-arduino-user/content/"
+- ESP-13 Shield(Blynk Community) "http://community.blynk.cc/t/esp-13-web-server-serial-wifi-shield/7125"
+- HTTP Request for ESP8266 module "https://github.com/esp8266/Arduino/blob/master/libraries/ESP8266WiFi/examples/HTTPSRequest/HTTPSRequest.ino"
