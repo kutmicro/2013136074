@@ -38,8 +38,8 @@
 
 | Arduino Pin | ESP8266 Shield | Description |
 | :---: | :---: | :---: |
-| TX | RX0 | 아두이노의 TX와 연결 |
-| RX | TX0 | 아두이노의 RTX와 연결 |
+| TX | RX0 | 아두이노의 송신 단자와 쉴드의 수신 단자 연결 |
+| RX | TX0 | 아두이노의 수신 단자와 쉴드의 송신 단자 연결 |
 
 참고 "https://macsbug.wordpress.com/2015/09/13/esp-12-esp8266-wi-fi-shield-for-arduino/"
 
