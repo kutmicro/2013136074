@@ -35,6 +35,14 @@
 | D24 | Din | NEOPIXEL2 제어 |
 | D25 | Din | NEOPIXEL3 제어 |
 | D26 | Din | NEOPIXEL4 제어 |
+
+| Arduino Pin | ESP8266 Shield | Description |
+| :---: | :---: | :---: |
+| TX | RX0 | 아두이노의 TX와 연결 |
+| RX | TX0 | 아두이노의 RTX와 연결 |
+
+참고 "https://macsbug.wordpress.com/2015/09/13/esp-12-esp8266-wi-fi-shield-for-arduino/"
+
 ### 5. 구성도   
 ![구성도](https://github.com/kutmicro/2013136074/blob/master/res_md/%EA%B5%AC%EC%84%B1%EB%8F%84.png "구성도")
 ### 6. 재료
