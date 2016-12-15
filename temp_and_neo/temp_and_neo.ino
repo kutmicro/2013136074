@@ -18,6 +18,9 @@ Adafruit_NeoPixel strip2 = Adafruit_NeoPixel(5, PIN2, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip3 = Adafruit_NeoPixel(5, PIN3, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip4 = Adafruit_NeoPixel(5, PIN4, NEO_GRB + NEO_KHZ800);
 
+int preLED = 0;    //이전 loop에서 켰던 LED
+int nowLED = 0;
+int setWait = 20;
 
 void setup() {
   // put your setup code here, to run once:
@@ -35,10 +38,7 @@ void loop() {
   // put your main code here, to run repeatedly:
   controlSensor();
   controlLED();
-  
-  delay(1000);
-  
-  setStrip();
+  delay(100);
 }
 //온습도센서 제어하는 함수
 void controlSensor() {
@@ -63,28 +63,29 @@ void controlSensor() {
   Serial.print(DHT.humidity,1);
   Serial.print(",\t");
   Serial.println(DHT.temperature,1);
+
 }
 //온도에 따라 NeoPixel 제어하는 함수 
 void controlLED() {
-   if (DHT.temperature <= 19) {  //19도 이하
-    colorWipe(strip1.Color(255, 0, 0), 50, &strip1); //빨간색 출력
-    strip1.clear();
-    //rainbowCycle(20, &strip1);
+   if (DHT.temperature <= 26) {  //19도 이하
+    nowLED = 1;
+    clearLED();
+    rainbowCycle(setWait, &strip1, 1);
   }
-  else if (DHT.temperature <= 22) {   //22도 이하   20 21 22
-    //rainbowCycle(20, &strip2);
-    colorWipe(strip2.Color(255, 0, 0), 50, &strip2); //빨간색 출력
-    strip2.clear();
+  else if (DHT.temperature <= 27) {   //22도 이하   20 21 22
+    nowLED = 2;
+    clearLED();
+    rainbowCycle(setWait, &strip2, 1);
   }
-  else if(DHT.temperature <= 24) {    //24도 이하  23 24 25
-    colorWipe(strip3.Color(255, 0, 0), 50, &strip3); //빨간색 출력
-    strip3.clear();
-    //rainbowCycle(20, &strip3);
+  else if(DHT.temperature <= 28) {    //24도 이하  23 24 
+    nowLED = 3;
+    clearLED();
+    rainbowCycle(setWait, &strip3, 1);
   }
   else {
-    colorWipe(strip4.Color(255, 0, 0), 50, &strip4); //빨간색 출력 
-    strip4.clear();
-    //rainbowCycle(20, &strip4);        // 26도 이하 26 27 28
+    nowLED = 4;
+    clearLED();
+    rainbowCycle(setWait, &strip4, 1);        // 25도 이상
   }
 }
 //NeoPixel에 달린 LED를 각각 주어진 인자값 색으로 채워나가는 함수
@@ -95,12 +96,26 @@ void colorWipe(uint32_t c, uint8_t wait, Adafruit_NeoPixel *strip) {
       delay(wait);
   }
 }
-
-//NeoPixel에 달린 LED를 각각 다른색으로 시작하여 다양한색으로 5번 반복한다
-void rainbowCycle(uint8_t wait, Adafruit_NeoPixel *strip) {
+//모든 LED를 출력가능한 모든색으로 한번씩 보여주는 동작을 한번하는 함수
+void rainbow(uint8_t wait, Adafruit_NeoPixel *strip) {
   uint16_t i, j;
 
-  for(j=0; j<256*5; j++) { 
+  for(j=0; j<256; j++) {
+    //j += 1;
+    for(i=0; i<(*strip).numPixels(); i++) {
+      (*strip).setPixelColor(i, Wheel((i+j) & 255, strip));
+    }
+    (*strip).show();
+    delay(wait);
+  }
+}
+
+//NeoPixel에 달린 LED를 각각 다른색으로 시작하여 다양한색으로 n번 반복한다
+void rainbowCycle(uint8_t wait, Adafruit_NeoPixel *strip, int n) {
+  uint16_t i, j;
+
+  for(j=0; j<256*n; j++) {
+    j += 2;
     for(i=0; i< (*strip).numPixels(); i++) {
       (*strip).setPixelColor(i, Wheel(((i * 256 / (*strip).numPixels()) + j) & 255, strip));
     }
@@ -122,13 +137,37 @@ uint32_t Wheel(byte WheelPos ,Adafruit_NeoPixel *strip) {
   }
 }
 void setStrip() {
-  strip1.begin(); //네오픽셀을 초기화하기 위해 모든LED를 off시킨다
+  strip1.begin();
   strip1.show(); 
-  strip2.begin(); //네오픽셀을 초기화하기 위해 모든LED를 off시킨다
+  strip2.begin();
   strip2.show(); 
-  strip3.begin(); //네오픽셀을 초기화하기 위해 모든LED를 off시킨다
+  strip3.begin();
   strip3.show(); 
-  strip4.begin(); //네오픽셀을 초기화하기 위해 모든LED를 off시킨다
+  strip4.begin();
   strip4.show(); 
 }
-
+void clearLED() {
+  Serial.print("NOWLED : ");
+  Serial.print(nowLED);
+  Serial.print(", preLED : ");
+  Serial.println(preLED);
+  if (nowLED != preLED) {
+    Serial.println("Different");
+    switch (preLED) {
+      case 1:
+        strip1.clear();
+        break;
+      case 2:
+        strip2.clear();
+        break;
+      case 3:
+        strip3.clear();
+        break;
+      case 4:
+        strip4.clear();
+        break;
+    }
+    setStrip();
+  }
+  preLED = nowLED;
+}
