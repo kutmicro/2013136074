@@ -24,4 +24,6 @@ void loop()
     Serial.println("Data from Bluetooth : " + str); //시리얼모니터에 str 출력
     str="";  //myString 변수값 초기화
   }
+  HC06.println("test");
+  delay(500);
 }
