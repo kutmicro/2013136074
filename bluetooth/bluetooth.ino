@@ -1,9 +1,12 @@
+#include <DS1307RTC.h>
+
 #define HC06 Serial3
 //#define PIN 13
 String tempStr = "";
 String strArray[35];
 int count = 0;
 int statusFlag = 0;     // 0 : default, 1 : recieving data, 2 : control LED
+bool isRecieving = false;
 
 
 void setup()
@@ -43,8 +46,7 @@ void loop()
         Serial.println(count);
         tempStr="";  //tempStr 변수값 초기화
       }
-    
-      if(count == 35) 
+      if(count > 15) 
       {
         for(int i = 0; i < 35; i++) {
           Serial.println(strArray[i]);
