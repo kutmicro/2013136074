@@ -12,7 +12,7 @@ void setup()
   delay(1000);
   Serial.begin(9600);
   HC06.begin(9600);
-  timeStr = changeTime("(2016-12-25 00:00:00 Clouds 1)");
+  //timeStr = changeTime("(2016-12-25 00:00:00 Clouds 1)");
   Serial.write("\nTest Start\n");
 }
 
