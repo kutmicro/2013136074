@@ -1,5 +1,6 @@
 #include <TimeLib.h>
 #include <TimeAlarms.h>
+
 String dataFromBluetooth;
 AlarmId threeHourAlarmId;
 
@@ -26,6 +27,7 @@ void loop() {
     //dataFromBluetooth = "(2016-12-23 15:00:00 Clear -4)(2016-12-23 18:00:00 Clouds -6)(2016-12-23 21:00:00 Clear -9)(2016-12-24 00:00:00 Clouds -7)(2016-12-24 03:00:00 Clear 0)(2016-12-24 06:00:00 Clear 2)(2016-12-24 09:00:00 Clouds -3)(2016-12-24 12:00:00 Clouds -7)(2016-12-24 15:00:00 Clear -9)(2016-12-24 18:00:00 Clouds -10)(2016-12-24 21:00:00 Clear -10)(2016-12-25 00:00:00 Clouds -7)(2016-12-25 03:00:00 Clouds 3)(2016-12-25 06:00:00 Clouds 5)(2016-12-25 09:00:00 Clouds 1)(2016-12-25 12:00:00 Clouds -2)(2016-12-25 15:00:00 Clouds -2)(2016-12-25 18:00:00 Clouds -3)(2016-12-25 21:00:00 Clouds -3)(2016-12-26 00:00:00 Clouds -1)END";
     dataFromBluetooth = "(2016-12-25 15:00:00 Clouds -2)(2016-12-25 18:00:00 Clouds -3)(2016-12-25 21:00:00 Clouds -3)(2016-12-26 00:00:00 Clouds -1)END";
     threeHourAlarmId =  Alarm.timerRepeat(3, Repeats);  //3초마다 Repeat호출
+    ch = 3; //LED 제어로 상태 바꿈
     break;
     
     //LED 제어
