@@ -121,7 +121,7 @@ void controlLED(String weather, int temp) {
   else if(weather.equals("Snow")) {    //24도 이하  23 24 
     nowLED = 4;
     clearLED();
-    rainbowCycle(setWait, &strip3, 1);
+    rainbowCycle(setWait, &strip4, 1);
   }
   else {
     nowLED = 4;
