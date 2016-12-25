@@ -9,6 +9,13 @@
 
 #define RepeatTime 5    //5초마다 날씨 제어
 
+String dataFromBluetooth;
+AlarmId threeHourAlarmId;
+
+int preLED = 0;    //이전 loop에서 켰던 LED
+int nowLED = 0;
+int setWait = 20;
+
 //네오픽셀을 사용하기 위해 객체를 생성한다. 
 //첫번째 인자값은 네오픽셀의 LED의 개수
 //두번째 인자값은 네오픽셀이 연결된 아두이노의 핀번호
@@ -17,13 +24,6 @@ Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(5, NEOPIN1, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip2 = Adafruit_NeoPixel(5, NEOPIN2, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip3 = Adafruit_NeoPixel(5, NEOPIN3, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip4 = Adafruit_NeoPixel(5, NEOPIN4, NEO_GRB + NEO_KHZ800);
-
-String dataFromBluetooth;
-AlarmId threeHourAlarmId;
-
-int preLED = 0;    //이전 loop에서 켰던 LED
-int nowLED = 0;
-int setWait = 20;
 
 void setup() {
   // put your setup code here, to run once:
@@ -45,8 +45,9 @@ void loop() {
     //블루투스 읽기
     case '2' :
     Serial.println("Data 2 recieved");
-    //dataFromBluetooth = "(2016-12-23 15:00:00 Clear -4)(2016-12-23 18:00:00 Clouds -6)(2016-12-23 21:00:00 Clear -9)(2016-12-24 00:00:00 Clouds -7)(2016-12-24 03:00:00 Clear 0)(2016-12-24 06:00:00 Clear 2)(2016-12-24 09:00:00 Clouds -3)(2016-12-24 12:00:00 Clouds -7)(2016-12-24 15:00:00 Clear -9)(2016-12-24 18:00:00 Clouds -10)(2016-12-24 21:00:00 Clear -10)(2016-12-25 00:00:00 Clouds -7)(2016-12-25 03:00:00 Clouds 3)(2016-12-25 06:00:00 Clouds 5)(2016-12-25 09:00:00 Clouds 1)(2016-12-25 12:00:00 Clouds -2)(2016-12-25 15:00:00 Clouds -2)(2016-12-25 18:00:00 Clouds -3)(2016-12-25 21:00:00 Clouds -3)(2016-12-26 00:00:00 Clouds -1)END";
-    dataFromBluetooth = "(Clouds -2)(Clouds -3)(Clouds -3)(Clouds -1)END";
+    dataFromBluetooth = "(2016-12-23 15:00:00 Clear -4)(2016-12-23 18:00:00 Clouds -6)(2016-12-23 21:00:00 Clear -9)(2016-12-24 00:00:00 Clouds -7)(2016-12-24 03:00:00 Clear 0)(2016-12-24 06:00:00 Clear 2)(2016-12-24 09:00:00 Clouds -3)(2016-12-24 12:00:00 Clouds -7)(2016-12-24 15:00:00 Clear -9)(2016-12-24 18:00:00 Clouds -10)(2016-12-24 21:00:00 Clear -10)(2016-12-25 00:00:00 Clouds -7)(2016-12-25 03:00:00 Clouds 3)(2016-12-25 06:00:00 Clouds 5)(2016-12-25 09:00:00 Clouds 1)(2016-12-25 12:00:00 Clouds -2)(2016-12-25 15:00:00 Clouds -2)(2016-12-25 18:00:00 Clouds -3)(2016-12-25 21:00:00 Clouds -3)(2016-12-26 00:00:00 Clouds -1)END";
+    dataFromBluetooth = "(2016-12-24 18:00:00 Clouds -10)(2016-12-24 21:00:00 Clear -10)(2016-12-25 00:00:00 Rain -7)(2016-12-25 00:00:00 Snow -7)END";
+    //dataFromBluetooth = "(Clouds -2)(Clouds -3)(Clouds -3)(Clouds -1)END";
     Repeats();      //Repeat 한번 호출
     threeHourAlarmId =  Alarm.timerRepeat(RepeatTime, Repeats);  //RepeatTime초마다 Repeat호출
     ch = 3; //LED 제어로 상태 바꿈
@@ -66,14 +67,9 @@ void  Repeats(){
   String weather;
   String temp;
   Serial.println("------------Repeats() Function-----------");
-  //마지막 데이터일 경우
-  if(dataFromBluetooth.indexOf("END") < 12) {
-    Serial.println("Last Data");
-    Alarm.free(threeHourAlarmId);
-  }
   printTime();
   Serial.print(RepeatTime);
-  Serial.print(" second timer");
+  Serial.println(" second timer");
   
   //받아온 데이터의 첫번째 부분만 꺼내기
   nowData = dataFromBluetooth.substring(dataFromBluetooth.indexOf("("),dataFromBluetooth.indexOf(")")+1);
@@ -82,18 +78,22 @@ void  Repeats(){
   dataFromBluetooth = dataFromBluetooth.substring(dataFromBluetooth.indexOf(nowData) + nowData.length());
   Serial.println("dataFromBluetooth : " + dataFromBluetooth);
 
-/*
   //첫번째 부분에서 날짜 제거
   nowData = nowData.substring(nowData.indexOf(" ") + 1);
   //첫번째 부분에서 시간 제거
   nowData = nowData.substring(nowData.indexOf(" ") + 1, nowData.indexOf(")"));
-*/
   //첫번째 부분의 날씨
-  weather = nowData.substring(nowData.indexOf("(") + 1,nowData.indexOf(" "));
-  //weather = nowData.substring(0,nowData.indexOf(" "));
+  //weather = nowData.substring(nowData.indexOf("(") + 1,nowData.indexOf(" "));
+  weather = nowData.substring(0,nowData.indexOf(" "));
   //첫번째 부분의 기온
+  //temp = nowData.substring(nowData.indexOf(" ") + 1);
   temp = nowData.substring(nowData.indexOf(" ") + 1);
-  //첫번째 부분으로 LED 제어
+  //마지막 데이터일 경우가 아닐 경우만  
+  //첫번째 부분으로 LED 제어(마지막 데이터
+  if(dataFromBluetooth.startsWith("END")) {
+    Serial.println("Last Data");
+    Alarm.free(threeHourAlarmId);
+  }
   controlLED(weather, temp.toInt());
   Serial.print("nowData : ");
   Serial.println(nowData);
@@ -101,17 +101,25 @@ void  Repeats(){
   Serial.println(weather);
   Serial.print("temp : ");
   Serial.println(temp.toInt());
+  
+  //마지막 데이터일 경우(데이터가END로 시작함)
+  if(dataFromBluetooth.startsWith("END")) {
+    Serial.println("Last Data");
+    Alarm.free(threeHourAlarmId);
+  }
   Serial.println("-----------------------------------------");
 }
 void controlLED(String weather, int temp) {
   if (weather.equals("Clear")) {  //맑으면 1번 LED켜기
     nowLED = 1;
     clearLED();
-    rainbowCycle(setWait, &strip1, 1);
+    //rainbow(setWait, &strip1);
+    //rainbowCycle(setWait, &strip1, 1);
   }
   else if (weather.equals("Clouds")) {   //흐리면 2번 LED 켜기
     nowLED = 2;
     clearLED();
+    //rainbow(setWait, &strip2);
     rainbowCycle(setWait, &strip2, 1);
   }
   else if(weather.equals("Rain")) {    //비오면 3번 LED 켜기
@@ -125,9 +133,9 @@ void controlLED(String weather, int temp) {
     rainbowCycle(setWait, &strip4, 1);
   }
   else {
-    nowLED = 4;
+    nowLED = 1;
     clearLED();
-    rainbowCycle(setWait, &strip4, 1); 
+    rainbowCycle(setWait, &strip1, 1); 
   }
 }
 void printTime() {
