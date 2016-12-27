@@ -20,10 +20,10 @@ int setWait = 20;
 //첫번째 인자값은 네오픽셀의 LED의 개수
 //두번째 인자값은 네오픽셀이 연결된 아두이노의 핀번호
 //세번째 인자값은 네오픽셀의 타입에 따라 바뀌는 flag
-Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(5, NEOPIN1, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel strip2 = Adafruit_NeoPixel(5, NEOPIN2, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel strip3 = Adafruit_NeoPixel(5, NEOPIN3, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel strip4 = Adafruit_NeoPixel(5, NEOPIN4, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(4, NEOPIN1, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip2 = Adafruit_NeoPixel(4, NEOPIN2, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip3 = Adafruit_NeoPixel(4, NEOPIN3, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip4 = Adafruit_NeoPixel(4, NEOPIN4, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   // put your setup code here, to run once:
@@ -114,13 +114,14 @@ void controlLED(String weather, int temp) {
     nowLED = 1;
     clearLED();
     //rainbow(setWait, &strip1);
-    //rainbowCycle(setWait, &strip1, 1);
+    rainbowCycle(setWait, &strip1, 1);
   }
   else if (weather.equals("Clouds")) {   //흐리면 2번 LED 켜기
     nowLED = 2;
     clearLED();
     //rainbow(setWait, &strip2);
     rainbowCycle(setWait, &strip2, 1);
+    
   }
   else if(weather.equals("Rain")) {    //비오면 3번 LED 켜기
     nowLED = 3;
